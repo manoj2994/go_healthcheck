@@ -21,9 +21,9 @@ Automate testing and deployment via CI/CD
 
 
 ### Tech Stack
-## Languages & Frameworks
+### Languages & Frameworks
 Go
-## Tools & Platforms
+### Tools & Platforms
 Docker
 PostgreSQL
 Kubernetes
@@ -32,15 +32,15 @@ Grafana
 GitHub Actions
 
 ### 📖 How to Run Locally
-# Clone repository
+#### Clone repository
 git clone https://github.com/username/go_healthcheck.git
 cd go_healthcheck
 
-# Install dependencies
+### Install dependencies
 go mod tidy
 
-# Run the app
+### Run the app
 go run main.go
 
-Test endpoint:
+### Test endpoint:
 curl http://localhost:8080/healthz
