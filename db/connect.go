@@ -13,21 +13,23 @@ import (
 func createdb(db_host, db_port, db_user, db_pwd, db_name string) error {
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=postgres sslmode=disable", db_host, db_port, db_user, db_pwd)
 	dbc, err := sql.Open("postgres", connStr)
-	utils.CheckError(err, "Error in opening connection;")
+	utils.CheckError(err, "Database connection established successfully;", "Error in opening connection;")
 
 	defer dbc.Close()
 	_, err = dbc.Exec("CREATE DATABASE " + db_name)
 	fmt.Printf("Creating Db %s", db_name)
-	utils.CheckError(err, "Error in creating DB;")
+	utils.CheckError(err, "Database created successfully;", "Error in creating DB;")
 
 	//fmt.Println("DB Created succesfully")
 	return nil
 }
 
 func Connect() (*sql.DB, error) {
-	err := godotenv.Load()
-	utils.CheckError(err, "Error in loading the db connection variable")
-
+	env := os.Getenv("ENV")
+	if env != "PROD" {
+		err := godotenv.Load()
+		utils.CheckError(err, "Environment variables loaded successfully;", "Error in loading the db connection variable")
+	}
 	db_host := os.Getenv("DB_HOST")
 	db_port := os.Getenv("DB_PORT")
 	db_user := os.Getenv("DB_USER")
@@ -37,7 +39,7 @@ func Connect() (*sql.DB, error) {
 	connStr := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", db_host, db_port, db_user, db_pwd, db_name)
 
 	db, err := sql.Open("postgres", connStr)
-	utils.CheckError(err, "Error in establishing connection;")
+	utils.CheckError(err, "Database connection established successfully;", "Error in establishing connection;")
 
 	return db, nil
 

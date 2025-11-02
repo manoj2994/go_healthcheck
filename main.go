@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -13,18 +11,15 @@ import (
 
 func main() {
 	DB, _ := db.Connect()
+	h := &handlers.Handler{DB: DB}
 
-	err := DB.Ping()
-	if err != nil {
-		log.Fatalf("Failed to ping DB: %v", err)
-	} else {
-		fmt.Println("Successfully pinged the database!")
-	}
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
-	r.Get("/healthz", handlers.Healthcheck)
+	r.Get("/healthz", h.Healthcheckwrite)
+
+	r.Get("/deepz", h.Healthcheckping)
 
 	http.ListenAndServe(":8080", r)
 }

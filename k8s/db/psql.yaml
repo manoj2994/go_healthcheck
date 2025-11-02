@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: db
+      db: postgresql
+      type: pod
+  template:
+    metadata:
+      labels:
+        type: pod
+        app: db
+        db: postgresql
+    spec:
+      containers:
+        - name: db-healthapp
+          image: 'localhost:5000/postgres:16.9-alpine'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: healthapp-config
+            - secretRef:
+                name: healthapp-secret
+          resources:
+              requests:
+                cpu: 500m
+                memory: 500Mi
+              limits:
+                cpu: 1
+                memory: 1Gi
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgresdata
+      volumes:
+        - name: postgresdata
+          persistentVolumeClaim:
+            claimName: db-volume-claim
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-host
+  labels:
+    app: db
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+  selector:
+    app: db
+    db: postgresql

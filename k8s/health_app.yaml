@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthapp
+spec:
+  selector:
+    matchLabels:
+      app: healthapp
+  template:
+    metadata:
+      labels:
+        app: healthapp
+    spec:
+      containers:
+      - name: healthapp
+        image: localhost:5000/healthcheck:latest # Use the tag of your registry
+        imagePullPolicy: Always # Crucial for using local images
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: healthapp-config
+        - secretRef:
+            name: healthapp-secret
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+            requests:
+              cpu: 100m
+              memory: 50Mi
+            limits:
+              cpu: 200m
+              memory: 100Mi
