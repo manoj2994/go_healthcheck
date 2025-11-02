@@ -14,8 +14,8 @@ Automate testing and deployment via CI/CD
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1️⃣ | **Building the app locally** — Clone/init project, install dependencies, run locally, test with curl/Postman | ![Completed](https://img.shields.io/badge/status-completed-brightgreen?style=flat-square) |
-| 2️⃣ | **Dockerizing the app** — Create clean Dockerfile, build image, connect to Postgres via Docker Compose | ![In Progress](https://img.shields.io/badge/status-in--progress-yellow?style=flat-square) |
-| 3️⃣ | **Container Orchestration** — Deploy app + DB via Docker Compose & Kubernetes | ![In Progress](https://img.shields.io/badge/status-in--progress-yellow?style=flat-square) |
+| 2️⃣ | **Dockerizing the app** — Create clean Dockerfile, build image, connect to Postgres via Docker Compose | ![Completed](https://img.shields.io/badge/status-completed-brightgreen?style=flat-square) |
+| 3️⃣ | **Container Orchestration** — Deploy app + DB via Docker Compose & Kubernetes | ![Completed](https://img.shields.io/badge/status-completed-brightgreen?style=flat-square) |
 | 4️⃣ | **Monitoring & Logs** — Add Prometheus metrics, structured JSON logs, integrate with Loki/ELK/Grafana | ![Pending](https://img.shields.io/badge/status-pending-lightgrey?style=flat-square) |
 | 5️⃣ | **CI/CD** — Use GitHub Actions to run tests, build & push image, deploy to dev env | ![Pending](https://img.shields.io/badge/status-pending-lightgrey?style=flat-square) |
 
